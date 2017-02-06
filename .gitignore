@@ -1,3 +1,8 @@
+# Robot code temp files
+.h~
+.cpp~
+.xml~
+
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
