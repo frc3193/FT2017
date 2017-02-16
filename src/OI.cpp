@@ -17,6 +17,7 @@
 #include "Commands/ChassisReverse.h"
 #include "Commands/ChassisShift.h"
 #include "Commands/ChassisTankDrive.h"
+#include "Commands/ClimberGo.h"
 #include "Commands/ClimberStop.h"
 #include "Commands/GearTilt.h"
 #include "Commands/IntakeForward.h"
@@ -37,7 +38,7 @@ OI::OI() {
     cRStick.reset(new JoystickButton(coDriver.get(), 10));
     cRStick->WhileHeld(new PlaceHolder());
     cLStick.reset(new JoystickButton(coDriver.get(), 9));
-    cLStick->WhileHeld(new PlaceHolder());
+    cLStick->WhileHeld(new ClimberGo());
     cRBumper.reset(new JoystickButton(coDriver.get(), 6));
     cRBumper->WhenPressed(new ShootToggle());
     cLBumper.reset(new JoystickButton(coDriver.get(), 5));
@@ -45,9 +46,9 @@ OI::OI() {
     cY.reset(new JoystickButton(coDriver.get(), 4));
     cY->WhileHeld(new PlaceHolder());
     cX.reset(new JoystickButton(coDriver.get(), 3));
-    cX->WhenPressed(new GearTilt());
+    cX->WhenPressed(new PlaceHolder());
     cB.reset(new JoystickButton(coDriver.get(), 2));
-    cB->WhileHeld(new PlaceHolder());
+    cB->WhenPressed(new GearTilt());
     cA.reset(new JoystickButton(coDriver.get(), 1));
     cA->WhileHeld(new IntakeForward());
     driver.reset(new Joystick(0));
@@ -70,6 +71,7 @@ OI::OI() {
     dA->WhileHeld(new PlaceHolder());
 
     // SmartDashboard Buttons
+    SmartDashboard::PutData("ClimberGo", new ClimberGo());
     SmartDashboard::PutData("ChassisShift", new ChassisShift());
     SmartDashboard::PutData("GearTilt", new GearTilt());
     SmartDashboard::PutData("ShooterIntake", new ShooterIntake());
