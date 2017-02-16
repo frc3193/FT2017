@@ -46,10 +46,10 @@ void RobotMap::init() {
     chassisLeftB.reset(new VictorSP(1));
     lw->AddActuator("Chassis", "LeftB", std::static_pointer_cast<VictorSP>(chassisLeftB));
     
-    chassisRightA.reset(new VictorSP(2));
+    chassisRightA.reset(new VictorSP(8));
     lw->AddActuator("Chassis", "RightA", std::static_pointer_cast<VictorSP>(chassisRightA));
     
-    chassisRightB.reset(new VictorSP(3));
+    chassisRightB.reset(new VictorSP(9));
     lw->AddActuator("Chassis", "RightB", std::static_pointer_cast<VictorSP>(chassisRightB));
     
     chassisRobotDrive.reset(new RobotDrive(chassisLeftA, chassisLeftB,
@@ -63,10 +63,10 @@ void RobotMap::init() {
     chassisShift.reset(new DoubleSolenoid(0, 2, 3));
     lw->AddActuator("Chassis", "Shift", chassisShift);
     
-    shooterLShoot.reset(new VictorSP(4));
+    shooterLShoot.reset(new VictorSP(2));
     lw->AddActuator("Shooter", "LShoot", std::static_pointer_cast<VictorSP>(shooterLShoot));
     
-    shooterLFeed.reset(new VictorSP(5));
+    shooterLFeed.reset(new VictorSP(3));
     lw->AddActuator("Shooter", "LFeed", std::static_pointer_cast<VictorSP>(shooterLFeed));
     
     shooterRShoot.reset(new VictorSP(6));
@@ -83,13 +83,13 @@ void RobotMap::init() {
     lw->AddSensor("Shooter", "REncoder", shooterREncoder);
     shooterREncoder->SetDistancePerPulse(1.0);
     shooterREncoder->SetPIDSourceType(PIDSourceType::kRate);
-    intakeRoller.reset(new VictorSP(8));
+    intakeRoller.reset(new VictorSP(5));
     lw->AddActuator("Intake", "Roller", std::static_pointer_cast<VictorSP>(intakeRoller));
     
     gearTilt.reset(new DoubleSolenoid(0, 0, 1));
     lw->AddActuator("Gear", "Tilt", gearTilt);
     
-    climberClimb.reset(new Talon(9));
+    climberClimb.reset(new Talon(4));
     lw->AddActuator("Climber", "Climb", std::static_pointer_cast<Talon>(climberClimb));
     
 

@@ -15,8 +15,10 @@
 #include "SmartDashboard/SmartDashboard.h"
 #include "Commands/AutonomousCommand.h"
 #include "Commands/ChassisReverse.h"
+#include "Commands/ChassisShift.h"
 #include "Commands/ChassisTankDrive.h"
 #include "Commands/ClimberStop.h"
+#include "Commands/GearTilt.h"
 #include "Commands/IntakeForward.h"
 #include "Commands/IntakeStop.h"
 #include "Commands/PlaceHolder.h"
@@ -43,7 +45,7 @@ OI::OI() {
     cY.reset(new JoystickButton(coDriver.get(), 4));
     cY->WhileHeld(new PlaceHolder());
     cX.reset(new JoystickButton(coDriver.get(), 3));
-    cX->WhileHeld(new PlaceHolder());
+    cX->WhenPressed(new GearTilt());
     cB.reset(new JoystickButton(coDriver.get(), 2));
     cB->WhileHeld(new PlaceHolder());
     cA.reset(new JoystickButton(coDriver.get(), 1));
@@ -51,13 +53,13 @@ OI::OI() {
     driver.reset(new Joystick(0));
     
     dRStick.reset(new JoystickButton(driver.get(), 10));
-    dRStick->WhileHeld(new PlaceHolder());
+    dRStick->WhenPressed(new ChassisShift());
     dLStick.reset(new JoystickButton(driver.get(), 9));
-    dLStick->WhileHeld(new PlaceHolder());
+    dLStick->WhenPressed(new ChassisShift());
     dRBumper.reset(new JoystickButton(driver.get(), 6));
-    dRBumper->WhileHeld(new PlaceHolder());
+    dRBumper->WhenPressed(new ChassisReverse());
     dLBumper.reset(new JoystickButton(driver.get(), 5));
-    dLBumper->WhileHeld(new PlaceHolder());
+    dLBumper->WhenPressed(new ChassisReverse());
     dY.reset(new JoystickButton(driver.get(), 4));
     dY->WhileHeld(new PlaceHolder());
     dX.reset(new JoystickButton(driver.get(), 3));
@@ -68,6 +70,8 @@ OI::OI() {
     dA->WhileHeld(new PlaceHolder());
 
     // SmartDashboard Buttons
+    SmartDashboard::PutData("ChassisShift", new ChassisShift());
+    SmartDashboard::PutData("GearTilt", new GearTilt());
     SmartDashboard::PutData("ShooterIntake", new ShooterIntake());
     SmartDashboard::PutData("IntakeForward", new IntakeForward());
     SmartDashboard::PutData("ShootToggle", new ShootToggle());
