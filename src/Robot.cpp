@@ -88,7 +88,7 @@ void Robot::TeleopInit() {
 		autonomousCommand->Cancel();
 
 	// necessary to avoid overwriting pre-existing preferences, if they exist
-	// be sure to set default RPM of shootSpeed once determined!
+	// TODO: set default RPM of shootSpeed once determined!
 	if (!Robot::robotPref->ContainsKey("shootSpeed"))
 			Robot::robotPref->PutInt("shootSpeed", 3500);
 		Robot::shooter->m_desiredSpeed = Robot::robotPref->GetInt("shootSpeed", 3500);
