@@ -50,6 +50,9 @@ void Robot::RobotInit() {
 	autonomousChooser.AddDefault("Auto #0", "auto0");
 	autonomousChooser.AddObject("Auto #1", "auto1");
 	SmartDashboard::PutData("Autonomous modes", &autonomousChooser);
+
+	// initializing chassis as forwards
+	Robot::chassis->m_isReversed = false;
   }
 
 /**
