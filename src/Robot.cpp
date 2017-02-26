@@ -47,10 +47,9 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	// auto choosing; each option is selected via an int parameter to AutoCommand()
-	autonomousChooser = new SendableChooser();
-	autonomousChooser->AddDefault("Auto #0", 0);
-	autonomousChooser->AddObject("Auto #1", 1);
-	SmartDashboard::PutData("Autonomous modes", autonomousChooser);
+	autonomousChooser.AddDefault("Auto #0", "auto0");
+	autonomousChooser.AddObject("Auto #1", "auto1");
+	SmartDashboard::PutData("Autonomous modes", &autonomousChooser);
   }
 
 /**
@@ -67,7 +66,7 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	// instantiate the command used for the autonomous period
-	autonomousCommand.reset(new AutoCommand(autonomousChooser->GetSelected()));
+	autonomousCommand.reset(new AutoCommand(autonomousChooser.GetSelected()));
 
 	if (autonomousCommand.get() != nullptr)
 		autonomousCommand->Start();

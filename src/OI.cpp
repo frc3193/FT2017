@@ -74,9 +74,6 @@ OI::OI() {
     dA->WhileHeld(new PlaceHolder());
 
     // SmartDashboard Buttons
-    SmartDashboard::PutData("AutoCommand", new AutoCommand());
-    SmartDashboard::PutData("AutoTurn", new AutoTurn());
-    SmartDashboard::PutData("AutoDrive", new AutoDrive());
     SmartDashboard::PutData("FeederStop", new FeederStop());
     SmartDashboard::PutData("FeederGo", new FeederGo());
     SmartDashboard::PutData("ClimberGo", new ClimberGo());
