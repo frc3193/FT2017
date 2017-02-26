@@ -1,4 +1,4 @@
-* Ignoring extraneous robot files
+# Ignoring extraneous robot files
 *.xml~
 *.o
 *.cpp~
