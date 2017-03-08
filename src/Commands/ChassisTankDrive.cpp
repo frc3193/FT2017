@@ -43,6 +43,9 @@ void ChassisTankDrive::Execute() {
 		Robot::chassis->robotDrive->TankDrive(Robot::oi->getdriver()->GetRawAxis(LEFT_Y_AXIS),
 											  Robot::oi->getdriver()->GetRawAxis(RIGHT_Y_AXIS));
 	}
+
+	SmartDashboard::PutNumber("Left Drive", Robot::chassis->leftEncoder->Get());
+	SmartDashboard::PutNumber("Right Drive", Robot::chassis->rightEncoder->Get());
 }
 
 // Make this return true when this Command no longer needs to run execute()

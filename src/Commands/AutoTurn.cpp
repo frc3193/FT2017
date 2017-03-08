@@ -55,5 +55,8 @@ void AutoTurn::End() {
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void AutoTurn::Interrupted() {
-
+	Robot::chassis->leftA->Set(0.0);
+	Robot::chassis->leftB->Set(0.0);
+	Robot::chassis->rightA->Set(0.0);
+	Robot::chassis->rightB->Set(0.0);
 }
