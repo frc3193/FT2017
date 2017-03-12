@@ -39,14 +39,14 @@ void ShooterDefault::Execute() {
 	if(Robot::shooter->m_shoot)
 	{
 		// left shooter bang-bang
-		if (Robot::shooter->m_lRPM < Robot::shooter->m_desiredSpeed)
-			Robot::shooter->lShoot->Set(1.0);
+		if ((Robot::shooter->m_lRPM *-1) < Robot::shooter->m_desiredSpeed)
+			Robot::shooter->lShoot->Set(-1.0);
 		else
 			Robot::shooter->lShoot->Set(0.0);
 
 		// right shooter bang-bang
 		if (Robot::shooter->m_rRPM < Robot::shooter->m_desiredSpeed)
-			Robot::shooter->rShoot->Set(1.0);
+			Robot::shooter->rShoot->Set(-1.0);
 		else
 			Robot::shooter->rShoot->Set(0.0);
 	}

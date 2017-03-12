@@ -21,27 +21,47 @@ AutoTurn::AutoTurn(float desiredDegrees, bool clockwise, double timeout): Comman
 	m_desiredDegrees = desiredDegrees;
 	m_clockwise = clockwise;
 	m_timeout = timeout;
+	angleError = 0;
+	currentDegrees = 0;
+	kP = 0;
 }
 
 
 // Called just before this Command runs the first time
 void AutoTurn::Initialize() {
 	SetTimeout(m_timeout);
-	// TODO: determine if calibrating here is appropriate (ample time to calibrate?)
-	Robot::chassis->gyro->Calibrate();
+	Robot::chassis->gyro->Reset();
 	Robot::chassis->leftEncoder->Reset();
 	Robot::chassis->rightEncoder->Reset();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoTurn::Execute() {
-
+	if(m_clockwise)
+	{
+		currentDegrees = Robot::chassis->gyro->GetAngle();
+		Robot::chassis->leftA->Set(-0.25 - angleError/m_desiredDegrees*0.7);
+		Robot::chassis->leftB->Set(-0.25 - angleError/m_desiredDegrees*0.7);
+		Robot::chassis->rightA->Set(-0.25 - angleError/m_desiredDegrees*0.7);
+		Robot::chassis->rightB->Set(-0.25 - angleError/m_desiredDegrees*0.7);
+	}
+	else
+	{
+		currentDegrees = (Robot::chassis->gyro->GetAngle() *-1);
+		Robot::chassis->leftA->Set(0.25 + angleError/m_desiredDegrees*0.7);
+		Robot::chassis->leftB->Set(0.25 + angleError/m_desiredDegrees*0.7);
+		Robot::chassis->rightA->Set(0.25 + angleError/m_desiredDegrees*0.7);
+		Robot::chassis->rightB->Set(0.25 + angleError/m_desiredDegrees*0.7);
+	}
+	angleError = m_desiredDegrees - currentDegrees;
+	SmartDashboard::PutNumber("TurnError", angleError);
+	SmartDashboard::PutNumber("currentDeg", currentDegrees);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoTurn::IsFinished() {
 	// TODO: add condition for reaching desired angle
-    return IsTimedOut();
+    return (angleError <= 0.5  || IsTimedOut());
 }
 
 // Called once after isFinished returns true

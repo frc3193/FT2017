@@ -62,7 +62,7 @@ void RobotMap::init() {
         chassisRobotDrive->SetSensitivity(0.5);
         chassisRobotDrive->SetMaxOutput(1.0);
 
-    chassisShift.reset(new DoubleSolenoid(0, 2, 3));
+    chassisShift.reset(new DoubleSolenoid(0, 0, 1));
     lw->AddActuator("Chassis", "Shift", chassisShift);
     
     chassisLeftEncoder.reset(new Encoder(4, 5, false, Encoder::k4X));
@@ -90,7 +90,7 @@ void RobotMap::init() {
     intakeRoller.reset(new VictorSP(5));
     lw->AddActuator("Intake", "Roller", std::static_pointer_cast<VictorSP>(intakeRoller));
     
-    gearTilt.reset(new DoubleSolenoid(0, 0, 1));
+    gearTilt.reset(new DoubleSolenoid(0, 4, 5));
     lw->AddActuator("Gear", "Tilt", gearTilt);
     
     climberClimb.reset(new Talon(4));

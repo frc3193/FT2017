@@ -90,8 +90,8 @@ void Robot::TeleopInit() {
 	// necessary to avoid overwriting pre-existing preferences, if they exist
 	// TODO: set default RPM of shootSpeed once determined!
 	if (!Robot::robotPref->ContainsKey("shootSpeed"))
-			Robot::robotPref->PutInt("shootSpeed", 3500);
-		Robot::shooter->m_desiredSpeed = Robot::robotPref->GetInt("shootSpeed", 3500);
+			Robot::robotPref->PutInt("shootSpeed", 1500);
+		Robot::shooter->m_desiredSpeed = Robot::robotPref->GetInt("shootSpeed", 1500);
 }
 
 void Robot::TeleopPeriodic() {

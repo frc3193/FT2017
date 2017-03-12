@@ -46,6 +46,7 @@ void ChassisTankDrive::Execute() {
 
 	SmartDashboard::PutNumber("Left Drive", Robot::chassis->leftEncoder->Get());
 	SmartDashboard::PutNumber("Right Drive", Robot::chassis->rightEncoder->Get());
+	SmartDashboard::PutNumber("GyroAngle", Robot::chassis->gyro->GetAngle());
 }
 
 // Make this return true when this Command no longer needs to run execute()

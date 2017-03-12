@@ -22,36 +22,38 @@ AutoDrive::AutoDrive(float desiredInches, bool forward, double timeout): Command
 	m_forward = forward;
 	m_timeout = timeout;
 	currentAngle = 0;
-	kP_ang = 0.03;
+	kP_ang = 0.004;
 	currentDist = 0;
 	distError = 0;
-	kP_dist = 0.03;
+	kP_dist = 0.9;
 }
 
 
 // Called just before this Command runs the first time
 void AutoDrive::Initialize() {
 	SetTimeout(m_timeout);
-	Robot::chassis->gyro->Calibrate();
+	Robot::chassis->gyro->Reset();
 	Robot::chassis->leftEncoder->Reset();
 	Robot::chassis->rightEncoder->Reset();
 }
 
-// Called repeatedly when this Command is scheduled to run
+// Called repeatedly when this Command is scheduled to run currentAngle * kP_ang)
 void AutoDrive::Execute() {
 	// TODO: PID for attaining desired distance.
 	// TODO: Be able to handle going either forwards or backwards
 	currentAngle = Robot::chassis->gyro->GetAngle();
-	// TODO: SetDistancePerPulse in inches
-	currentDist = Robot::chassis->leftEncoder->GetDistance();
+	// encoder returns degrees of rotation. Below converts this to inches.
+	currentDist = (Robot::chassis->leftEncoder->GetDistance() * -1) / 360 * 4 * 3.1415;
 	distError = m_desiredInches - currentDist;
-	Robot::chassis->robotDrive->Drive(1.0, currentAngle * kP_ang);
+	Robot::chassis->robotDrive->Drive(-0.2 - (distError * kP_dist / m_desiredInches), currentAngle*kP_ang*-1);
+	SmartDashboard::PutNumber("autoAngle", currentAngle);
+	SmartDashboard::PutNumber("autoDist", currentDist);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool AutoDrive::IsFinished() {
 	// TODO: add condition for achieving desired distance
-    return (distError <= 1 || IsTimedOut());
+    return (distError <= 0.33 || IsTimedOut());
 }
 
 // Called once after isFinished returns true
