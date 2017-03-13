@@ -34,7 +34,7 @@ void IntakeForward::Execute() {
 	// This is to prevent runaway balls and to maintain the ability to intake while in reverse.
 	// leftA was chosen to represent robot speed for simplicity's sake.
 	// Proportion of 0.3 was chosen for a potential max speed of -0.7 (arbitrary)
-	Robot::intake->roller->Set(-0.4 - (abs(Robot::chassis->leftA->Get()) * 0.3));
+	Robot::intake->roller->Set(-0.7 - (abs(Robot::chassis->leftA->Get()) * 0.3));
 }
 
 // Make this return true when this Command no longer needs to run execute()

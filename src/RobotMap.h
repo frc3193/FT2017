@@ -32,6 +32,8 @@ public:
 	static std::shared_ptr<SpeedController> chassisRightB;
 	static std::shared_ptr<RobotDrive> chassisRobotDrive;
 	static std::shared_ptr<DoubleSolenoid> chassisShift;
+	static std::shared_ptr<Encoder> chassisLeftEncoder;
+	static std::shared_ptr<Encoder> chassisRightEncoder;
 	static std::shared_ptr<SpeedController> shooterLShoot;
 	static std::shared_ptr<SpeedController> shooterRShoot;
 	static std::shared_ptr<Encoder> shooterLEncoder;

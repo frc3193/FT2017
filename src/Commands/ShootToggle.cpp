@@ -30,10 +30,10 @@ void ShootToggle::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShootToggle::Execute() {
-	if(Robot::shooter->m_shoot)
-		Robot::shooter->m_shoot = false;
+	if(Robot::shooter->mShoot)
+		Robot::shooter->mShoot = false;
 	else
-		Robot::shooter->m_shoot = true;
+		Robot::shooter->mShoot = true;
 }
 
 // Make this return true when this Command no longer needs to run execute()

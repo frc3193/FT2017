@@ -22,6 +22,8 @@ std::shared_ptr<SpeedController> RobotMap::chassisRightA;
 std::shared_ptr<SpeedController> RobotMap::chassisRightB;
 std::shared_ptr<RobotDrive> RobotMap::chassisRobotDrive;
 std::shared_ptr<DoubleSolenoid> RobotMap::chassisShift;
+std::shared_ptr<Encoder> RobotMap::chassisLeftEncoder;
+std::shared_ptr<Encoder> RobotMap::chassisRightEncoder;
 std::shared_ptr<SpeedController> RobotMap::shooterLShoot;
 std::shared_ptr<SpeedController> RobotMap::shooterRShoot;
 std::shared_ptr<Encoder> RobotMap::shooterLEncoder;
@@ -60,9 +62,17 @@ void RobotMap::init() {
         chassisRobotDrive->SetSensitivity(0.5);
         chassisRobotDrive->SetMaxOutput(1.0);
 
-    chassisShift.reset(new DoubleSolenoid(0, 2, 3));
+    chassisShift.reset(new DoubleSolenoid(0, 0, 1));
     lw->AddActuator("Chassis", "Shift", chassisShift);
     
+    chassisLeftEncoder.reset(new Encoder(4, 5, false, Encoder::k4X));
+    lw->AddSensor("Chassis", "LeftEncoder", chassisLeftEncoder);
+    chassisLeftEncoder->SetDistancePerPulse(1.0);
+    chassisLeftEncoder->SetPIDSourceType(PIDSourceType::kRate);
+    chassisRightEncoder.reset(new Encoder(6, 7, false, Encoder::k4X));
+    lw->AddSensor("Chassis", "RightEncoder", chassisRightEncoder);
+    chassisRightEncoder->SetDistancePerPulse(1.0);
+    chassisRightEncoder->SetPIDSourceType(PIDSourceType::kRate);
     shooterLShoot.reset(new VictorSP(2));
     lw->AddActuator("Shooter", "LShoot", std::static_pointer_cast<VictorSP>(shooterLShoot));
     
@@ -80,7 +90,7 @@ void RobotMap::init() {
     intakeRoller.reset(new VictorSP(5));
     lw->AddActuator("Intake", "Roller", std::static_pointer_cast<VictorSP>(intakeRoller));
     
-    gearTilt.reset(new DoubleSolenoid(0, 0, 1));
+    gearTilt.reset(new DoubleSolenoid(0, 4, 5));
     lw->AddActuator("Gear", "Tilt", gearTilt);
     
     climberClimb.reset(new Talon(4));
