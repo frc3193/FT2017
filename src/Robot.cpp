@@ -52,7 +52,7 @@ void Robot::RobotInit() {
 	SmartDashboard::PutData("Autonomous modes", &autonomousChooser);
 
 	// initializing chassis as forwards
-	Robot::chassis->m_isReversed = false;
+	Robot::chassis->mIsReversed = false;
   }
 
 /**
@@ -91,7 +91,7 @@ void Robot::TeleopInit() {
 	// TODO: set default RPM of shootSpeed once determined!
 	if (!Robot::robotPref->ContainsKey("shootSpeed"))
 			Robot::robotPref->PutInt("shootSpeed", 1500);
-		Robot::shooter->m_desiredSpeed = Robot::robotPref->GetInt("shootSpeed", 1500);
+		Robot::shooter->mDesiredSpeed = Robot::robotPref->GetInt("shootSpeed", 1500);
 }
 
 void Robot::TeleopPeriodic() {

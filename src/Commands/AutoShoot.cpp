@@ -13,30 +13,27 @@
 
 
 
-AutoShoot::AutoShoot(int balls, float delay, double timeout): Command() {
+AutoShoot::AutoShoot(int balls, float delay, double timeout): Command(), mBalls(balls), mDelay(delay), mTimeout(timeout) {
         // Use requires() here to declare subsystem dependencies
     // eg. requires(Robot::chassis.get());
 	Requires(Robot::shooter.get());
 	Requires(Robot::feeder.get());
-	m_balls = balls;
-	m_delay = delay;
-	m_timeout = timeout;
 }
 
 
 // Called just before this Command runs the first time
 void AutoShoot::Initialize() {
-	SetTimeout(m_timeout);
+	SetTimeout(mTimeout);
 	feederTimer.Reset();
 	feederTimer.Start();
-	Robot::shooter->m_shoot = true;
+	Robot::shooter->mShoot = true;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoShoot::Execute() {
-	for(int i = 0; i < m_balls; i++)
+	for(int i = 0; i < mBalls; i++)
 	{
-		if (feederTimer.HasPeriodPassed(m_delay))
+		if (feederTimer.HasPeriodPassed(mDelay))
 		{
 			Robot::feeder->left->Set(1.0);
 			Robot::feeder->right->Set(1.0);
@@ -51,7 +48,7 @@ bool AutoShoot::IsFinished() {
 
 // Called once after isFinished returns true
 void AutoShoot::End() {
-	Robot::shooter->m_shoot = false;
+	Robot::shooter->mShoot = false;
 	Robot::feeder->left->Set(0.0);
 	Robot::feeder->left->Set(0.0);
 }
@@ -59,7 +56,7 @@ void AutoShoot::End() {
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
 void AutoShoot::Interrupted() {
-	Robot::shooter->m_shoot = false;
+	Robot::shooter->mShoot = false;
 	Robot::feeder->left->Set(0.0);
 	Robot::feeder->left->Set(0.0);
 }

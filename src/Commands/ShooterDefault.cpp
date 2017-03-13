@@ -30,22 +30,22 @@ void ShooterDefault::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterDefault::Execute() {
-	Robot::shooter->m_lRPM = Robot::shooter->lEncoder->GetRate();
-	Robot::shooter->m_rRPM = Robot::shooter->rEncoder->GetRate();
-	SmartDashboard::PutNumber("lRPM", Robot::shooter->m_lRPM);
-	SmartDashboard::PutNumber("rRPM", Robot::shooter->m_rRPM);
+	Robot::shooter->mLRPM = Robot::shooter->lEncoder->GetRate();
+	Robot::shooter->mRRPM = Robot::shooter->rEncoder->GetRate();
+	SmartDashboard::PutNumber("lRPM", Robot::shooter->mLRPM);
+	SmartDashboard::PutNumber("rRPM", Robot::shooter->mRRPM);
 
 	// use bang-bang & feed-forward combo to get shooters up to m_desiredSpeed
-	if(Robot::shooter->m_shoot)
+	if(Robot::shooter->mShoot)
 	{
 		// left shooter bang-bang
-		if ((Robot::shooter->m_lRPM *-1) < Robot::shooter->m_desiredSpeed)
+		if ((Robot::shooter->mLRPM *-1) < Robot::shooter->mDesiredSpeed)
 			Robot::shooter->lShoot->Set(-1.0);
 		else
 			Robot::shooter->lShoot->Set(0.0);
 
 		// right shooter bang-bang
-		if (Robot::shooter->m_rRPM < Robot::shooter->m_desiredSpeed)
+		if (Robot::shooter->mRRPM < Robot::shooter->mDesiredSpeed)
 			Robot::shooter->rShoot->Set(-1.0);
 		else
 			Robot::shooter->rShoot->Set(0.0);

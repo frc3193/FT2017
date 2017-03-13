@@ -33,7 +33,7 @@ void ChassisTankDrive::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void ChassisTankDrive::Execute() {
 	// if reversed, flips left and right inputs so left joystick still drives left side and vice-versa
-	if (Robot::chassis->m_isReversed)
+	if (Robot::chassis->mIsReversed)
 	{
 		Robot::chassis->robotDrive->TankDrive(Robot::oi->getdriver()->GetRawAxis(RIGHT_Y_AXIS),
 											  Robot::oi->getdriver()->GetRawAxis(LEFT_Y_AXIS));
