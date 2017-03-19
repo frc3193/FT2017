@@ -30,8 +30,8 @@ void ShooterDefault::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterDefault::Execute() {
-	Robot::shooter->mLRPM = Robot::shooter->lEncoder->GetRate();
-	Robot::shooter->mRRPM = Robot::shooter->rEncoder->GetRate();
+	Robot::shooter->mLRPM = abs(Robot::shooter->lEncoder->GetRate());
+	Robot::shooter->mRRPM = abs(Robot::shooter->rEncoder->GetRate());
 	SmartDashboard::PutNumber("lRPM", Robot::shooter->mLRPM);
 	SmartDashboard::PutNumber("rRPM", Robot::shooter->mRRPM);
 
@@ -39,14 +39,14 @@ void ShooterDefault::Execute() {
 	if(Robot::shooter->mShoot)
 	{
 		// left shooter bang-bang
-		if ((Robot::shooter->mLRPM *-1) < Robot::shooter->mDesiredSpeed)
+		if ((Robot::shooter->mLRPM) < Robot::shooter->mDesiredSpeed)
 			Robot::shooter->lShoot->Set(-1.0);
 		else
 			Robot::shooter->lShoot->Set(0.0);
 
 		// right shooter bang-bang
 		if (Robot::shooter->mRRPM < Robot::shooter->mDesiredSpeed)
-			Robot::shooter->rShoot->Set(-1.0);
+			Robot::shooter->rShoot->Set(1.0);
 		else
 			Robot::shooter->rShoot->Set(0.0);
 	}
@@ -58,7 +58,7 @@ void ShooterDefault::Execute() {
 		 */
 		// For testing purposes, set shooter speed to joystick right axis
 		Robot::shooter->lShoot->Set(Robot::oi->getcoDriver()->GetRawAxis(5));
-		Robot::shooter->rShoot->Set(Robot::oi->getcoDriver()->GetRawAxis(5));
+		Robot::shooter->rShoot->Set(Robot::oi->getcoDriver()->GetRawAxis(5)*-1);
 	}
 }
 

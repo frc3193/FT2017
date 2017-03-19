@@ -10,10 +10,10 @@
 
 
 #include "AutoShoot.h"
+#include "Delay.h"
 
 
-
-AutoShoot::AutoShoot(int balls, float delay, double timeout): Command(), mBalls(balls), mDelay(delay), mTimeout(timeout) {
+AutoShoot::AutoShoot(double timeout): Command(), mTimeout(timeout) {
         // Use requires() here to declare subsystem dependencies
     // eg. requires(Robot::chassis.get());
 	Requires(Robot::shooter.get());
@@ -24,14 +24,15 @@ AutoShoot::AutoShoot(int balls, float delay, double timeout): Command(), mBalls(
 // Called just before this Command runs the first time
 void AutoShoot::Initialize() {
 	SetTimeout(mTimeout);
-	feederTimer.Reset();
-	feederTimer.Start();
-	Robot::shooter->mShoot = true;
+	//feederTimer.Reset();
+	//feederTimer.Start();
+//	Robot::shooter->lShoot->Set(-1.0);
+//	Robot::shooter->rShoot->Set(1.0);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void AutoShoot::Execute() {
-	for(int i = 0; i < mBalls; i++)
+	/*for(int i = 0; i < mBalls; i++)
 	{
 		if (feederTimer.HasPeriodPassed(mDelay))
 		{
@@ -39,6 +40,20 @@ void AutoShoot::Execute() {
 			Robot::feeder->right->Set(1.0);
 		}
 	}
+	*/
+	if (abs(Robot::shooter->lEncoder->GetRate()) < Robot::shooter->mDesiredSpeed)
+		Robot::shooter->lShoot->Set(-1.0);
+	else
+		Robot::shooter->lShoot->Set(0.0);
+
+	// right shooter bang-bang
+	if (abs(Robot::shooter->rEncoder->GetRate()) < Robot::shooter->mDesiredSpeed)
+		Robot::shooter->rShoot->Set(1.0);
+	else
+		Robot::shooter->rShoot->Set(0.0);
+
+	Robot::feeder->left->Set(-0.4);
+	Robot::feeder->right->Set(0.4);
 }
 
 // Make this return true when this Command no longer needs to run execute()

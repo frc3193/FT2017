@@ -31,7 +31,7 @@ void FeederGo::Initialize() {
 // Called repeatedly when this Command is scheduled to run
 void FeederGo::Execute() {
 	Robot::feeder->left->Set(-0.5);
-	Robot::feeder->right->Set(0.5);
+	Robot::feeder->right->Set(1.0);
 }
 
 // Make this return true when this Command no longer needs to run execute()

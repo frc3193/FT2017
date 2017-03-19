@@ -59,7 +59,7 @@ void AutoTurn::Execute() {
 // Make this return true when this Command no longer needs to run execute()
 bool AutoTurn::IsFinished() {
 
-    return (angleError <= 0.5  || IsTimedOut());
+    return (angleError <= 0.75  || IsTimedOut());
 }
 
 // Called once after isFinished returns true

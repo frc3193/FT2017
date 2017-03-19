@@ -90,7 +90,7 @@ void RobotMap::init() {
     intakeRoller.reset(new VictorSP(5));
     lw->AddActuator("Intake", "Roller", std::static_pointer_cast<VictorSP>(intakeRoller));
     
-    gearTilt.reset(new DoubleSolenoid(0, 4, 5));
+    gearTilt.reset(new DoubleSolenoid(0, 5, 6));
     lw->AddActuator("Gear", "Tilt", gearTilt);
     
     climberClimb.reset(new Talon(4));

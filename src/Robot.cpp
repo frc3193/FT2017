@@ -47,9 +47,21 @@ void Robot::RobotInit() {
 	oi.reset(new OI());
 
 	// auto choosing; each option is selected via an int parameter to AutoCommand()
-	autonomousChooser.AddDefault("Auto #0", "auto0");
+	autonomousChooser.AddDefault("StraightGear", "auto0");
 	autonomousChooser.AddObject("Auto #1", "auto1");
+	autonomousChooser.AddObject("BlueShootCross", "auto2");
+	autonomousChooser.AddObject("BlueShootGear", "auto3");
+	autonomousChooser.AddObject("RedShootCross", "auto4");
+	autonomousChooser.AddObject("RedShootGear", "auto5");
+	autonomousChooser.AddObject("BlueFarGear", "auto6");
+	autonomousChooser.AddObject("RedFarGear", "auto7");
+
+
+
 	SmartDashboard::PutData("Autonomous modes", &autonomousChooser);
+
+	// Camera #1
+	CameraServer::GetInstance()->StartAutomaticCapture(0);
 
 	// initializing chassis as forwards
 	Robot::chassis->mIsReversed = false;
@@ -60,7 +72,7 @@ void Robot::RobotInit() {
  * You can use it to reset subsystems before shutting down.
  */
 void Robot::DisabledInit(){
-
+	Robot::gear->tilt->Set(DoubleSolenoid::kForward); // Tilt gear
 }
 
 void Robot::DisabledPeriodic() {
@@ -69,6 +81,9 @@ void Robot::DisabledPeriodic() {
 
 void Robot::AutonomousInit() {
 	// instantiate the command used for the autonomous period
+	Robot::chassis->shift->Set(DoubleSolenoid::kReverse);
+//	Robot::gear->tilt->Set(DoubleSolenoid::kReverse);
+	Robot::gear->tilt->Set(DoubleSolenoid::kReverse); // Tilt gear back.
 	autonomousCommand.reset(new AutoCommand(autonomousChooser.GetSelected()));
 
 	if (autonomousCommand.get() != nullptr)
@@ -89,9 +104,10 @@ void Robot::TeleopInit() {
 
 	// necessary to avoid overwriting pre-existing preferences, if they exist
 	// TODO: set default RPM of shootSpeed once determined!
+	Robot::gear->tilt->Set(DoubleSolenoid::kReverse); // Tilt gear back.
 	if (!Robot::robotPref->ContainsKey("shootSpeed"))
-			Robot::robotPref->PutInt("shootSpeed", 1500);
-		Robot::shooter->mDesiredSpeed = Robot::robotPref->GetInt("shootSpeed", 1500);
+			Robot::robotPref->PutInt("shootSpeed", 1090);
+		Robot::shooter->mDesiredSpeed = Robot::robotPref->GetInt("shootSpeed", 1090);
 }
 
 void Robot::TeleopPeriodic() {
